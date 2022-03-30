@@ -74,27 +74,27 @@ const AdminNavigator = () => (
   </AdminStack.Navigator>
 );
 
-// const AuthNavigator = () => (
-//   <NavigationContainer>
-//     <AuthStack.Navigator screenOptions={defaultNavStyle}>
-//       <AdminStack.Screen name='Auth' component={AuthScreen} options={AuthScreenOptions} />
-//     </AuthStack.Navigator>
-//   </NavigationContainer>
-// );
+const AuthNavigator = () => (
+  <NavigationContainer>
+    <AuthStack.Navigator screenOptions={defaultNavStyle}>
+      <AdminStack.Screen name='Auth' component={AuthScreen} options={AuthScreenOptions} />
+    </AuthStack.Navigator>
+  </NavigationContainer>
+);
 
 const ShopNavigator = () => (
   <NavigationContainer>
     <Drawer.Navigator
-      drawerContent={props =>{
-        return (
-          <View>
-            <SafeAreaView>
-              <DrawerItem {...props} />
-              <Button title='Logout'  />
-            </SafeAreaView>
-          </View>
-        )
-      }}
+      // drawerContent={props =>{
+      //   return (
+      //     <View>
+      //       <SafeAreaView>
+      //         <DrawerItem {...props} />
+      //         <Button title='Logout'  />
+      //       </SafeAreaView>
+      //     </View>
+      //   )
+      // }}
       screenOptions={{
         headerShown: false,
         drawerActiveTintColor: Colors.primary,

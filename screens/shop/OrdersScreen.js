@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from "react";
 import {
   FlatList,
   View,
@@ -7,13 +7,13 @@ import {
   StyleSheet,
   Button,
   Text,
-} from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CustomHeaderButton from '../../components/UI/HeaderButton';
-import { useSelector, useDispatch } from 'react-redux';
-import OrderItem from '../../components/Shop/OrderItem';
-import * as ordersActions from '../../store/actions/order';
-import Colors from '../../constants/Colors';
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
+import { useSelector, useDispatch } from "react-redux";
+import OrderItem from "../../components/Shop/OrderItem";
+import * as ordersActions from "../../store/actions/order";
+import Colors from "../../constants/Colors";
 
 const OrdersScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,7 @@ const OrdersScreen = () => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size='large' color={Colors.primary} />
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
   }
@@ -51,14 +51,18 @@ const OrdersScreen = () => {
     return (
       <View style={styles.centered}>
         <Text style={styles.text}>An error occurred!</Text>
-        <Button title='Try again' onPress={loadProducts} color={Colors.primary} />
+        <Button
+          title="Try again"
+          onPress={loadProducts}
+          color={Colors.primary}
+        />
       </View>
     );
   }
 
   if (orders.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>No order found, Maybe start ordering some products?</Text>
       </View>
     );
@@ -82,12 +86,12 @@ const OrdersScreen = () => {
 
 export const screenOptions = ({ navigation }) => {
   return {
-    headerTitle: 'Your Orders',
+    headerTitle: "Your Orders",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
-          title='Menu'
-          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+          title="Menu"
+          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
           onPress={() => {
             navigation.toggleDrawer();
           }}
@@ -100,11 +104,11 @@ export const screenOptions = ({ navigation }) => {
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
-    fontFamily: 'open-sans',
+    fontFamily: "open-sans",
     fontSize: 16,
     marginBottom: 10,
   },

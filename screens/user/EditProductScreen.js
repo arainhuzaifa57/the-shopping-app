@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from "react";
 import {
   View,
   KeyboardAvoidingView,
@@ -7,17 +7,19 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
-} from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CustomHeaderButton from '../../components/UI/HeaderButton';
-import { useSelector, useDispatch } from 'react-redux';
-import * as productsActions from '../../store/actions/product';
-import Input from '../../components/UI/Input';
-import Colors from '../../constants/Colors';
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
+import { useSelector, useDispatch } from "react-redux";
+import * as productsActions from "../../store/actions/product";
+import Input from "../../components/UI/Input";
+import Colors from "../../constants/Colors";
+import { LogBox } from "react-native";
+LogBox.ignoreLogs([
+  "Non-serializable values were found in the navigation state",
+]);
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -53,10 +55,10 @@ const EditProductScreen = ({ route, navigation }) => {
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      title: editedProduct ? editedProduct.title : '',
-      imageUrl: editedProduct ? editedProduct.imageUrl : '',
-      description: editedProduct ? editedProduct.description : '',
-      price: '',
+      title: editedProduct ? editedProduct.title : "",
+      imageUrl: editedProduct ? editedProduct.imageUrl : "",
+      description: editedProduct ? editedProduct.description : "",
+      price: "",
     },
     inputValidities: {
       title: editedProduct ? true : false,
@@ -69,13 +71,15 @@ const EditProductScreen = ({ route, navigation }) => {
 
   useEffect(async () => {
     if (error) {
-      Alert.alert('An error occurred!', error, [{ text: 'Okay' }]);
+      Alert.alert("An error occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
 
   const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
-      Alert.alert('Wrong input!', 'Please check the errors in the form.', [{ text: 'Okay' }]);
+      Alert.alert("Wrong input!", "Please check the errors in the form.", [
+        { text: "Okay" },
+      ]);
       return;
     }
     setError(null);
@@ -109,7 +113,20 @@ const EditProductScreen = ({ route, navigation }) => {
   }, [dispatch, productId, formState]);
 
   useEffect(() => {
-    navigation.setParams({ submit: submitHandler });
+    // navigation.setParams({ submit: submitHandler });
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="Save"
+            iconName={
+              Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
+            }
+            onPress={submitHandler}
+          />
+        </HeaderButtons>
+      ),
+    });
   }, [submitHandler]);
 
   const inputChangeHandler = useCallback(
@@ -127,62 +144,62 @@ const EditProductScreen = ({ route, navigation }) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size='large' color={Colors.primary} />
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
       <ScrollView>
         <View style={styles.form}>
           <Input
-            id='title'
-            label='Title'
-            errorText='Please enter a valid title!'
-            keyboardType='default'
-            autoCapitalize='sentences'
+            id="title"
+            label="Title"
+            errorText="Please enter a valid title!"
+            keyboardType="default"
+            autoCapitalize="sentences"
             autoCorrect
-            returnKeyType='next'
+            returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={editedProduct ? editedProduct.title : ''}
+            initialValue={editedProduct ? editedProduct.title : ""}
             initiallyValid={!!editedProduct}
             required
           />
           <Input
-            id='imageUrl'
-            label='Image Url'
-            errorText='Please enter a valid image url!'
-            keyboardType='default'
-            returnKeyType='next'
+            id="imageUrl"
+            label="Image Url"
+            errorText="Please enter a valid image url!"
+            keyboardType="default"
+            returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={editedProduct ? editedProduct.imageUrl : ''}
+            initialValue={editedProduct ? editedProduct.imageUrl : ""}
             initiallyValid={!!editedProduct}
             required
           />
           {editedProduct ? null : (
             <Input
-              id='price'
-              label='Price'
-              errorText='Please enter a valid price!'
-              keyboardType='decimal-pad'
-              returnKeyType='next'
+              id="price"
+              label="Price"
+              errorText="Please enter a valid price!"
+              keyboardType="decimal-pad"
+              returnKeyType="next"
               onInputChange={inputChangeHandler}
               required
               min={0.1}
             />
           )}
           <Input
-            id='description'
-            label='Description'
-            errorText='Please enter a valid description!'
-            keyboardType='default'
-            autoCapitalize='sentences'
+            id="description"
+            label="Description"
+            errorText="Please enter a valid description!"
+            keyboardType="default"
+            autoCapitalize="sentences"
             autoCorrect
             multiline
             numberOfLines={3}
             onInputChange={inputChangeHandler}
-            initialValue={editedProduct ? editedProduct.description : ''}
+            initialValue={editedProduct ? editedProduct.description : ""}
             initiallyValid={!!editedProduct}
             required
             minLength={5}
@@ -195,18 +212,20 @@ const EditProductScreen = ({ route, navigation }) => {
 
 export const screenOptions = ({ route }) => {
   const { productId } = route.params;
-  const { submit } = route.params;
   return {
-    headerTitle: productId === null ? 'Add Product' : 'Edit Product',
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item
-          title='Save'
-          iconName={Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'}
-          onPress={submit}
-        />
-      </HeaderButtons>
-    ),
+    headerTitle: productId === null ? "Add Product" : "Edit Product",
+
+    // set handerRight option inside the functional component
+
+    // headerRight: () => (
+    //   <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+    //     <Item
+    //       title='Save'
+    //       iconName={Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'}
+    //       onPress={submit}
+    //     />
+    //   </HeaderButtons>
+    // ),
   };
 };
 
@@ -216,8 +235,8 @@ const styles = StyleSheet.create({
   },
   centered: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

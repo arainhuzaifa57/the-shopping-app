@@ -36,7 +36,7 @@ const CartScreen = (props) => {
       <Card style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:
-          <Text style={styles.amount}>${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}</Text>
+          <Text style={styles.amount}>  ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}</Text>
         </Text>
         {isLoading ? (
           <ActivityIndicator size='small' color={Colors.primary} />

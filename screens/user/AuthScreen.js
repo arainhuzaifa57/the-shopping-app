@@ -77,9 +77,9 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate({
-        name: 'All Products'
-      })
+      // props.navigation.navigate({
+      //   name: 'All Products'
+      // })
     } catch (err) {
       setError(err.message);
       setIsLoading(false);

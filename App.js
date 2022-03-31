@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import ProductsNavigator from './navigation/ShopNavigator';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AppNavigator from './navigation/AppNavigator';
 // Reducer
 import productsReducer from './store/reducers/products';
 import cartReducer from './store/reducers/cart';
@@ -39,9 +39,9 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ProductsNavigator />
-      </SafeAreaView>
+      {/* <SafeAreaView style={{ flex: 1 }}> */}
+        <AppNavigator />
+      {/* </SafeAreaView> */}
     </Provider>
   );
 }

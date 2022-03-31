@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -7,15 +7,15 @@ import {
   ActivityIndicator,
   View,
   Text,
-} from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector, useDispatch } from 'react-redux';
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector, useDispatch } from "react-redux";
 // On Windows Shift + Alt + F. (Format code)
-import ProductItem from '../../components/Shop/ProductItem';
-import CustomHeaderButton from '../../components/UI/HeaderButton';
-import * as cartActions from '../../store/actions/cart';
-import * as productsActions from '../../store/actions/product';
-import Colors from '../../constants/Colors';
+import ProductItem from "../../components/Shop/ProductItem";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
+import * as cartActions from "../../store/actions/cart";
+import * as productsActions from "../../store/actions/product";
+import Colors from "../../constants/Colors";
 
 const ProductsOverViewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,11 +36,11 @@ const ProductsOverViewScreen = (props) => {
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener('willFocus', loadProducts);
-    return willFocusSub;
-    // return () => {
-    //   willFocusSub.remove();
-    // };
+    const unsubscribe = props.navigation.addListener("focus", loadProducts);
+    // return willFocusSub;
+    return () => {
+      unsubscribe();
+    };
   }, [loadProducts]);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const ProductsOverViewScreen = (props) => {
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
-      name: 'ProductsDetail',
+      name: "ProductsDetail",
       params: {
         productId: id,
         productTitle: title,
@@ -64,7 +64,11 @@ const ProductsOverViewScreen = (props) => {
     return (
       <View style={styles.centered}>
         <Text style={styles.text}>An error occurred!</Text>
-        <Button title='Try again' onPress={loadProducts} color={Colors.primary} />
+        <Button
+          title="Try again"
+          onPress={loadProducts}
+          color={Colors.primary}
+        />
       </View>
     );
   }
@@ -72,7 +76,7 @@ const ProductsOverViewScreen = (props) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size='large' color={Colors.primary} />
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
   }
@@ -96,16 +100,20 @@ const ProductsOverViewScreen = (props) => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onSelect={() => selectItemHandler(itemData.item.id, itemData.item.title)}
+          onSelect={() =>
+            selectItemHandler(itemData.item.id, itemData.item.title)
+          }
         >
           <Button
             color={Colors.primary}
-            title='View Details'
-            onPress={() => selectItemHandler(itemData.item.id, itemData.item.title)}
+            title="View Details"
+            onPress={() =>
+              selectItemHandler(itemData.item.id, itemData.item.title)
+            }
           />
           <Button
             color={Colors.primary}
-            title='To Cart'
+            title="To Cart"
             onPress={() => {
               dispatch(cartActions.addToCart(itemData.item));
             }}
@@ -118,12 +126,12 @@ const ProductsOverViewScreen = (props) => {
 
 export const screenOptions = ({ navigation }) => {
   return {
-    headerTitle: 'All Products',
+    headerTitle: "All Products",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
-          title='Menu'
-          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+          title="Menu"
+          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
           onPress={() => {
             navigation.toggleDrawer();
           }}
@@ -133,11 +141,11 @@ export const screenOptions = ({ navigation }) => {
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
-          title='Cart'
-          iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+          title="Cart"
+          iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
           onPress={() =>
             navigation.navigate({
-              name: 'Cart',
+              name: "Cart",
             })
           }
         />
@@ -149,11 +157,11 @@ export const screenOptions = ({ navigation }) => {
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
-    fontFamily: 'open-sans',
+    fontFamily: "open-sans",
     fontSize: 16,
     marginBottom: 10,
   },

@@ -53,7 +53,7 @@ const OrdersScreen = () => {
         <Text style={styles.text}>An error occurred!</Text>
         <Button
           title="Try again"
-          onPress={loadProducts}
+          onPress={loadOrders}
           color={Colors.primary}
         />
       </View>

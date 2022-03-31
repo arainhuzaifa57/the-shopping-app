@@ -25,7 +25,7 @@ export const fetchProducts = () => {
         loadedProduct.push(
           new Product(
             key,
-            'u1',
+            resData[key].ownerId,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -83,7 +83,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         }),
       }
     );
-
+    // https://bit.ly/38gEAvr
     const resData = await response.json();
 
     dispatch({
